@@ -7,7 +7,7 @@ A lightweight package manager for managing GitHub-based packages. Install, list,
 Flash supports the following commands:
 
 - **Install a Package**: `-S <github_user>/<repo>`
-- **List Installed Packages**: `-L`
+- **List cloned Packages**: `-L`
 - **Remove a Package**: `-R <package>`
 - **Update a Package**: `-U <package>`
 - **Update All Installed Packages**: `-UA`
