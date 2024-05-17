@@ -13,17 +13,6 @@ fn clone_repo(repo_url: &str, clone_dir: &Path) -> Result<(), git2::Error> {
     Ok(())
 }
 
-fn update_flash() {
-    let status = Command::new("sh")
-            .arg("-c")
-            .arg("flash_update")
-            .status()?;
-
-    if !status.success() {
-        return Err(format!("Install command failed with status: {}", status).into());
-    }
-}
-
 fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Error>> {
     let config_file = package_dir.join("config.flash");
     if !config_file.exists() {
