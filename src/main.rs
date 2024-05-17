@@ -7,7 +7,7 @@ use git2::Repository;
 use dirs::home_dir;
 use colored::*;
 
-let ver = 1.9;
+const VER: &str = "1.9";
 
 fn clone_repo(repo_url: &str, clone_dir: &Path) -> Result<(), git2::Error> {
     println!("{} Cloning {} into {}", ">>".green(), repo_url, clone_dir.display());
@@ -77,10 +77,9 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
     Ok(clear)
 }
 
-fn show_version(ver) {
+fn show_version(ver: &str) {
     println!("Version: {}", ver);
 }
-
 
 fn list_packages() {
     println!("{} Cloned packages:", ">>".yellow());
@@ -138,7 +137,6 @@ fn update_all_packages() {
     }
 }
 
-
 fn ask_and_remove(clone_dir: &Path) {
     println!("{} Do you want to remove the directory {}? [y/N]", ">>".yellow(), clone_dir.display());
     let mut input = String::new();
@@ -162,11 +160,7 @@ fn main() {
         eprintln!("  -U <package>: Update a package.");
         eprintln!("  -UA: Update all cloned packages.");
         eprintln!("  -v: Show Version");
-        std::process::e
-
-
-
-        xit(1);
+        std::process::exit(1);
     }
 
     let command = &args[1];
@@ -240,7 +234,7 @@ fn main() {
             update_all_packages();
         },
         "-v" => {
-            show_version();
+            show_version(VER);
         },
         _ => {
             eprintln!("Unknown command: {}", command);
