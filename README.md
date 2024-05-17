@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/github/license/riviox/flash.svg)](https://github.com/riviox/flash/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/riviox/flash.svg)](https://github.com/riviox/flash/issues)
 [![GitHub stars](https://img.shields.io/github/stars/riviox/flash.svg)](https://github.com/riviox/flash/stargazers)
-[![Lines of code](https://img.shields.io/tokei/lines/github/riviox/flash)](https://github.com/riviox/flash)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/riviox/flash)
 # ⚡flash⚡
 A lightweight package manager for managing GitHub-based packages. Install, list, remove, and update packages with ease directly from the command line.
 
