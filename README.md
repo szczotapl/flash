@@ -7,13 +7,13 @@ A lightweight package manager for managing GitHub-based packages. Install, list,
 
 Flash supports the following commands:
 
+<img src="./art/logo.png" alt="Flash Logo" align="right" height="200px">
+
 - **Install a Package**: `-S <github_user>/<repo>`
 - **List cloned Packages**: `-L`
 - **Remove a Package**: `-R <package>`
 - **Update a Package**: `-U <package>`
 - **Update All Installed Packages**: `-UA`
-
-<img src="./art/logo.png" alt="Flash Logo" align="right" height="200px">
 
 # Package template:
 
