@@ -21,6 +21,10 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
         return Err(format!("Config file not found: {}", config_file.display()).into());
     }
 
+    if config_file.exists() {
+        println!("{} Found config file at: {}", ">>".green(), config_file.display());
+    }
+
     let config_content = fs::read_to_string(config_file)?;
     let mut exec_command = None;
     let mut package_name = None;
@@ -138,7 +142,8 @@ fn update_all_packages() {
 }
 
 fn ask_and_remove(clone_dir: &Path) {
-    println!("{} Do you want to remove the directory {}? [y/N]", ">>".yellow(), clone_dir.display());
+    print!("{} Do you want to remove the directory {}? [y/N]: ", ">>".yellow(), clone_dir.display());
+    io::stdout().flush().unwrap();
     let mut input = String::new();
     io::stdin().read_line(&mut input).expect("Failed to read line");
     if input.trim().eq_ignore_ascii_case("y") {
