@@ -7,6 +7,8 @@ use git2::Repository;
 use dirs::home_dir;
 use colored::*;
 
+let ver = 1.9;
+
 fn clone_repo(repo_url: &str, clone_dir: &Path) -> Result<(), git2::Error> {
     println!("{} Cloning {} into {}", ">>".green(), repo_url, clone_dir.display());
     Repository::clone(repo_url, clone_dir)?;
@@ -38,11 +40,13 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
     }
 
     if let Some(name) = package_name {
-        println!("{} Installing package: {}", ">>".green(), name);
+        println!("{} package: {}", ">>".green(), name);
     }
     if let Some(desc) = package_desc {
         println!("{} Description: {}", ">>".green(), desc);
     }
+
+    println!("{} Clear directory after installation: {}", ">>".green(), clear);
 
     print!("{} Confirm installation? [y/N]: ", ">>".yellow());
     io::stdout().flush().unwrap();
@@ -71,6 +75,10 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
     }
 
     Ok(clear)
+}
+
+fn show_version(ver) {
+    println!("Version: {}", ver);
 }
 
 
@@ -153,7 +161,12 @@ fn main() {
         eprintln!("  -R <package>: Remove a package.");
         eprintln!("  -U <package>: Update a package.");
         eprintln!("  -UA: Update all cloned packages.");
-        std::process::exit(1);
+        eprintln!("  -v: Show Version");
+        std::process::e
+
+
+
+        xit(1);
     }
 
     let command = &args[1];
@@ -225,6 +238,9 @@ fn main() {
         },
         "-UA" => {
             update_all_packages();
+        },
+        "-v" => {
+            show_version();
         },
         _ => {
             eprintln!("Unknown command: {}", command);
