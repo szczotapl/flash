@@ -12,8 +12,7 @@ Flash supports the following commands:
 - **Remove a Package**: `-R <package>`
 - **Update a Package**: `-U <package>`
 - **Update All Installed Packages**: `-UA`
-  ![ss](https://github.com/riviox/flash/assets/100956266/d3f00bde-6030-4996-a25e-d8cd9c259e0c)
-
+<img src="./art/logo.png" align="center">
 
 # Package template:
 
@@ -28,3 +27,5 @@ name=flash
 desc=A lightweight package manager for managing GitHub-based packages. Install, list, remove, and update packages with ease directly from the command line.
 clear=true
 ```
+
+![ss](https://github.com/riviox/flash/assets/100956266/d3f00bde-6030-4996-a25e-d8cd9c259e0c)
