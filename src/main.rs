@@ -1,6 +1,6 @@
 use std::env;
 use std::fs;
-use std::io::{self};
+use std::io::{self, Write};
 use std::path::Path;
 use std::process::Command;
 use git2::Repository;
@@ -13,6 +13,17 @@ fn clone_repo(repo_url: &str, clone_dir: &Path) -> Result<(), git2::Error> {
     Ok(())
 }
 
+fn update_flash() {
+    let status = Command::new("sh")
+            .arg("-c")
+            .arg("flash_update")
+            .status()?;
+
+    if !status.success() {
+        return Err(format!("Install command failed with status: {}", status).into());
+    }
+}
+
 fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Error>> {
     let config_file = package_dir.join("config.flash");
     if !config_file.exists() {
@@ -21,14 +32,38 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
 
     let config_content = fs::read_to_string(config_file)?;
     let mut exec_command = None;
+    let mut package_name = None;
+    let mut package_desc = None;
     let mut clear = false;
 
     for line in config_content.lines() {
         if line.starts_with("exec=") {
             exec_command = Some(line[5..].to_string());
+        } else if line.starts_with("name=") {
+            package_name = Some(line[5..].to_string());
+        } else if line.starts_with("desc=") {
+            package_desc = Some(line[5..].to_string());
         } else if line.starts_with("clear=true") {
             clear = true;
         }
+    }
+
+    if let Some(name) = package_name {
+        println!("{} Installing package: {}", ">>".green(), name);
+    }
+    if let Some(desc) = package_desc {
+        println!("{} Description: {}", ">>".green(), desc);
+    }
+
+    print!("{} Confirm installation? [y/N]: ", ">>".yellow());
+    io::stdout().flush().unwrap();
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).expect("Failed to read line");
+    let confirm = input.trim().eq_ignore_ascii_case("y");
+
+    if !confirm {
+        println!("{} Installation aborted.", ">>".yellow());
+        return Ok(false);
     }
 
     if let Some(command) = exec_command {
