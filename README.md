@@ -12,9 +12,7 @@ Flash supports the following commands:
 - **Remove a Package**: `-R <package>`
 - **Update a Package**: `-U <package>`
 - **Update All Installed Packages**: `-UA`
-<div style="align-self: center;">
-  <img src="./art/logo.png" alt="Flash Logo" width="25%">
-</div>
+<img src="./art/logo.png" alt="Flash Logo" align="right" height="240px">
 # Package template:
 
 - `exec`: Specifies the installation command for the package.
