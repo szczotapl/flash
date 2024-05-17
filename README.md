@@ -1,13 +1,15 @@
 <div align="center">
-![banner](./art/banner.png)
-[![GitHub release](https://img.shields.io/github/release/riviox/flash.svg)](https://github.com/riviox/flash/releases)
-[![License](https://img.shields.io/github/license/riviox/flash.svg)](https://github.com/riviox/flash/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/riviox/flash.svg)](https://github.com/riviox/flash/issues)
-[![GitHub stars](https://img.shields.io/github/stars/riviox/flash.svg)](https://github.com/riviox/flash/stargazers)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/riviox/flash)
-# ⚡flash⚡
-A lightweight package manager for managing GitHub-based packages. Install, list, remove, and update packages with ease directly from the command line.
+  <img src="./art/banner.png" alt="banner">
+  <br>
+  <a href="https://github.com/riviox/flash/releases"><img src="https://img.shields.io/github/release/riviox/flash.svg" alt="GitHub release"></a>
+  <a href="https://github.com/riviox/flash/blob/main/LICENSE"><img src="https://img.shields.io/github/license/riviox/flash.svg" alt="License"></a>
+  <a href="https://github.com/riviox/flash/issues"><img src="https://img.shields.io/github/issues/riviox/flash.svg" alt="GitHub issues"></a>
+  <a href="https://github.com/riviox/flash/stargazers"><img src="https://img.shields.io/github/stars/riviox/flash.svg" alt="GitHub stars"></a>
+  <img src="https://img.shields.io/github/languages/code-size/riviox/flash" alt="GitHub code size in bytes">
+  <h1>⚡flash⚡</h1>
+  <p>A lightweight package manager for managing GitHub-based packages. Install, list, remove, and update packages with ease directly from the command line.</p>
 </div>
+
 
 ## Usage
 
