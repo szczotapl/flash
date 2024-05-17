@@ -13,7 +13,7 @@ Flash supports the following commands:
 - **Update a Package**: `-U <package>`
 - **Update All Installed Packages**: `-UA`
 
-<img src="./art/logo.png" alt="Flash Logo" align="right" height="25%">
+<img src="./art/logo.png" alt="Flash Logo" align="right" height="200px">
 
 # Package template:
 
