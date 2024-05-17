@@ -121,50 +121,90 @@ fn ask_and_remove(clone_dir: &Path) {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() != 3 || args[1] != "-S" {
-        eprintln!("Usage: {} -S <github_user>/<repo>", args[0]);
+    if args.len() < 2 {
+        eprintln!("Usage: {} <command> [options]", args[0]);
+        eprintln!("Commands:");
+        eprintln!("  -S <github_user>/<repo>: Clone and install a package from GitHub.");
+        eprintln!("  -L: List installed packages.");
+        eprintln!("  -R <package>: Remove a package.");
+        eprintln!("  -U <package>: Update a package.");
+        eprintln!("  -UA: Update all installed packages.");
         std::process::exit(1);
     }
 
-    let github_user_repo = &args[2];
-    let parts: Vec<&str> = github_user_repo.split('/').collect();
-    if parts.len() != 2 {
-        eprintln!("Invalid repository format. Use <github_user>/<repo>.");
-        std::process::exit(1);
-    }
-
-    let github_user = parts[0];
-    let repo = parts[1];
-    let repo_url = format!("https://github.com/{}/{}", github_user, repo);
-    let clone_dir = home_dir()
-        .expect("Could not get home directory")
-        .join(".flash/packages")
-        .join(repo);
-
-    if clone_dir.exists() {
-        println!("{} Package {} already exists.", ">>".yellow(), repo);
-        ask_and_remove(&clone_dir);
-    }
-
-    if let Err(e) = clone_repo(&repo_url, &clone_dir) {
-        eprintln!("{} Failed to clone repository: {}", ">>".red(), e);
-        ask_and_remove(&clone_dir);
-        std::process::exit(1);
-    }
-
-    match run_config_script(&clone_dir) {
-        Ok(clear) => {
-            if clear {
-                fs::remove_dir_all(&clone_dir).expect("Failed to remove directory");
-                println!("{} Directory {} removed.", ">>".green(), clone_dir.display());
+    let command = &args[1];
+    match command.as_str() {
+        "-S" => {
+            if args.len() != 3 {
+                eprintln!("Usage: {} -S <github_user>/<repo>", args[0]);
+                std::process::exit(1);
             }
+            let github_user_repo = &args[2];
+            let parts: Vec<&str> = github_user_repo.split('/').collect();
+            if parts.len() != 2 {
+                eprintln!("Invalid repository format. Use <github_user>/<repo>.");
+                std::process::exit(1);
+            }
+            let github_user = parts[0];
+            let repo = parts[1];
+            let repo_url = format!("https://github.com/{}/{}", github_user, repo);
+            let clone_dir = home_dir()
+                .expect("Could not get home directory")
+                .join(".flash/packages")
+                .join(repo);
+
+            if clone_dir.exists() {
+                println!("{} Package {} already exists.", ">>".yellow(), repo);
+                ask_and_remove(&clone_dir);
+            }
+
+            if let Err(e) = clone_repo(&repo_url, &clone_dir) {
+                eprintln!("{} Failed to clone repository: {}", ">>".red(), e);
+                ask_and_remove(&clone_dir);
+                std::process::exit(1);
+            }
+
+            match run_config_script(&clone_dir) {
+                Ok(clear) => {
+                    if clear {
+                        fs::remove_dir_all(&clone_dir).expect("Failed to remove directory");
+                        println!("{} Directory {} removed.", ">>".green(), clone_dir.display());
+                    }
+                },
+                Err(e) => {
+                    eprintln!("{} Failed to run config script: {}", ">>".red(), e);
+                    ask_and_remove(&clone_dir);
+                    std::process::exit(1);
+                }
+            }
+
+            println!("{} Package {} installed successfully.", ">>".green(), repo);
         },
-        Err(e) => {
-            eprintln!("{} Failed to run config script: {}", ">>".red(), e);
-            ask_and_remove(&clone_dir);
+        "-L" => {
+            list_packages();
+        },
+        "-R" => {
+            if args.len() != 3 {
+                eprintln!("Usage: {} -R <package>", args[0]);
+                std::process::exit(1);
+            }
+            let package_name = &args[2];
+            remove_package(package_name);
+        },
+        "-U" => {
+            if args.len() != 3 {
+                eprintln!("Usage: {} -U <package>", args[0]);
+                std::process::exit(1);
+            }
+            let package_name = &args[2];
+            update_package(package_name);
+        },
+        "-UA" => {
+            update_all_packages();
+        },
+        _ => {
+            eprintln!("Unknown command: {}", command);
             std::process::exit(1);
         }
     }
-
-    println!("{} Package {} installed successfully.", ">>".green(), repo);
 }
