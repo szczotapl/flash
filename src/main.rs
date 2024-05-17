@@ -75,7 +75,7 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
 
 
 fn list_packages() {
-    println!("{} Installed packages:", ">>".yellow());
+    println!("{} Cloned packages:", ">>".yellow());
     let package_dir = home_dir().expect("Could not get home directory").join(".flash/packages");
     if let Ok(entries) = fs::read_dir(&package_dir) {
         for entry in entries {
@@ -149,10 +149,10 @@ fn main() {
         eprintln!("Usage: {} <command> [options]", args[0]);
         eprintln!("Commands:");
         eprintln!("  -S <github_user>/<repo>: Clone and install a package from GitHub.");
-        eprintln!("  -L: List installed packages.");
+        eprintln!("  -L: List cloned packages.");
         eprintln!("  -R <package>: Remove a package.");
         eprintln!("  -U <package>: Update a package.");
-        eprintln!("  -UA: Update all installed packages.");
+        eprintln!("  -UA: Update all cloned packages.");
         std::process::exit(1);
     }
 
