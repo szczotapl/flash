@@ -33,6 +33,7 @@ Flash supports the following commands:
 - `desc`: Offers a brief description of the package.
 - `clear=true/false`: Indicates whether the cloned package directory should be removed after installation.
 ## Example:
+`config.flash`
 ```
 exec=make install
 name=flash
