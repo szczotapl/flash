@@ -165,6 +165,7 @@ fn main() {
         eprintln!("  -U <package>: Update a package.");
         eprintln!("  -UA: Update all cloned packages.");
         eprintln!("  -v: Show Version");
+        eprintln!("https://github.com/riviox/flash");
         std::process::exit(1);
     }
 

@@ -7,9 +7,13 @@
   <a href="https://github.com/riviox/flash/stargazers"><img src="https://img.shields.io/github/stars/riviox/flash.svg" alt="GitHub stars"></a>
   <img src="https://img.shields.io/github/languages/code-size/riviox/flash" alt="GitHub code size in bytes">
   <h1>⚡flash⚡</h1>
-  <p>A lightweight package manager for managing GitHub-based packages. Install, list, remove, and update packages with ease directly from the command line.</p>
+  <p>A lightweight package manager for managing GitHub-based packages. Install, list, and update packages with ease directly from the command line.</p>
 </div>
 
+## Install:
+```bash
+curl -sSL https://raw.githubusercontent.com/riviox/flash/master/installer.sh | bash
+```
 
 ## Usage
 
@@ -19,7 +23,6 @@ Flash supports the following commands:
 
 - **Install a Package**: `-S <github_user>/<repo>`
 - **List cloned Packages**: `-L`
-- **Remove a Package**: `-R <package>`
 - **Update a Package**: `-U <package>`
 - **Update All Installed Packages**: `-UA`
 
