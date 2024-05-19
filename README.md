@@ -32,6 +32,7 @@ Flash supports the following commands:
 - `name`: Provides the name of the package.
 - `desc`: Offers a brief description of the package.
 - `clear=true/false`: Indicates whether the cloned package directory should be removed after installation.
+- `deps`: Specifies dependencies
 ## Example:
 `config.flash`
 ```
