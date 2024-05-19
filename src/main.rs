@@ -2,9 +2,9 @@ use std::env;
 use std::fs;
 use std::io::{self, Write};
 use std::path::Path;
-use std::process::Command;
 use git2::Repository;
 use dirs::home_dir;
+use std::process::{Command, Stdio};
 use colored::*;
 
 const VER: &str = "1.9";
@@ -30,6 +30,7 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
     let mut package_name = None;
     let mut package_desc = None;
     let mut clear = false;
+    let mut dependencies = Vec::new(); // Store dependencies
 
     for line in config_content.lines() {
         if line.starts_with("exec=") {
@@ -40,6 +41,10 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
             package_desc = Some(line[5..].to_string());
         } else if line.starts_with("clear=true") {
             clear = true;
+        } else if line.starts_with("deps=") {
+            // Extract dependencies
+            let deps = line[5..].split(',').map(|dep| dep.trim()).collect::<Vec<_>>();
+            dependencies.extend(deps);
         }
     }
 
@@ -49,6 +54,10 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
     if let Some(desc) = package_desc {
         println!("{} Description: {}", ">>".green(), desc);
     }
+    if !dependencies.is_empty() {
+        println!("{} Dependencies: {}", ">>".green(), dependencies.join(", "));
+    }
+
 
     println!("{} Clear directory after installation: {}", ">>".green(), clear);
 
@@ -62,6 +71,22 @@ fn run_config_script(package_dir: &Path) -> Result<bool, Box<dyn std::error::Err
         println!("{} Installation aborted.", ">>".yellow());
         return Ok(false);
     }
+
+    // Install dependencies
+    let dep_list: Vec<&str> = dependencies.iter().map(|dep| *dep).collect();
+    let status = Command::new("sudo")
+        .arg("pacman")
+        .arg("-S")
+        .arg("--needed")
+        .arg("--noconfirm")
+        .args(&dep_list)
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()?;
+    if !status.success() {
+        return Err(format!("Failed to install dependencies with Pacman").into());
+    }
+
 
     if let Some(command) = exec_command {
         println!("{} Running install command: {}", ">>".green(), command);

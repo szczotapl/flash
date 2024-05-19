@@ -39,6 +39,7 @@ exec=make install
 name=flash
 desc=A lightweight package manager for managing GitHub-based packages. Install, list, remove, and update packages with ease directly from the command line.
 clear=true
+deps=rust
 ```
 
 ![ss](https://github.com/riviox/flash/assets/100956266/d3f00bde-6030-4996-a25e-d8cd9c259e0c)
