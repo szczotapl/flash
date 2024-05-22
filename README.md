@@ -12,6 +12,10 @@
 
 ## Install:
 ```bash
+curl -sSL https://riviox.is-a.dev/flash.sh | bash
+```
+or
+```bash
 curl -sSL https://raw.githubusercontent.com/riviox/flash/master/installer.sh | bash
 ```
 
